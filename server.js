@@ -45,11 +45,6 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-// React 라우팅 처리
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
-
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

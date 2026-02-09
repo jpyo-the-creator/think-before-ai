@@ -1,10 +1,14 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// React 앱 서빙
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.post('/api/chat', async (req, res) => {
   const { question } = req.body;
@@ -25,7 +29,6 @@ app.post('/api/chat', async (req, res) => {
     });
 
     const data = await response.json();
-    console.log('API Response:', JSON.stringify(data, null, 2));
     
     if (!response.ok) {
       return res.status(500).json({ error: data.error?.message || 'API request failed' });
@@ -42,7 +45,13 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-app.listen(3001, () => {
-  console.log('Server running on http://localhost:3001');
+// React 라우팅 처리
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 

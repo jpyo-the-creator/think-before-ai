@@ -18,7 +18,7 @@ function App() {
 
   const callAnthropicAPI = async (prompt) => {
     try {
-      const response = await fetch('http://think-before-ai-production.uprailway.app/api/chat', {
+      const response = await fetch('https://think-before-ai-production.up.railway.app/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
